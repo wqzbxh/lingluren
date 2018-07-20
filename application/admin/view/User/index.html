@@ -114,7 +114,7 @@
             $.post("{:url('user/delAction')}",{'id':$page},function(data){
                 console.log(data);
                 if(data['code'] == 1){
-                    location.href = '{:url("user/index")}?page='+$page;
+                    location.href = '{:url("user/index")}';
                 }else{
                     alert('删除失败');
                 }

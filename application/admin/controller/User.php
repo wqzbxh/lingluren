@@ -33,6 +33,11 @@ class User extends Login
         $page = isset($_GET['page']) ? $_GET['page'] : 0;
         $type = isset($_POST['type']) ? $_POST['type'] : 2;
         $limit =10;
+        var_dump($start_time);
+        var_dump($end_time);
+        var_dump($type);
+        var_dump($page);
+
         $offset = $page * $limit;
         if(empty($search)){
             $userRows = $userModel->where(array('is_show'=>1,'is_del'=>0,'r_id'=>$type))->where('create_time','between time',[$start_time,$end_time])->field($userModel->field)->limit($offset,$limit)->select()->toArray();
@@ -97,7 +102,7 @@ class User extends Login
                     'mssg' => $actionLogModel::ERRORCODE[1],
                     'data' => array()
                 );
-                $actionLogModel->addActionLog(1,$this->user_id,$this->username,'删除了编号为'.$_POST['id'].'的用户');
+              //  $actionLogModel->addActionLog(1,$this->user_id,$this->username,'删除了编号为'.$_POST['id'].'的用户');
             }else{
                 $returnArray = array(
                     'code' => 100002,
