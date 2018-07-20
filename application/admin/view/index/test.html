@@ -1,0 +1,53 @@
+
+
+
+<title>老师管理界面</title>
+
+<div class="container-fluid" style="background-color: #F6F8F9;height: 800px;">
+    <div class="row ">
+
+        <!--左部菜单部分-->
+        <div class="menu col-lg-2">
+            {include file="layout/side"}
+        </div>
+
+        <!--右部详细页面内容部分-->
+        <div class="col-lg-10">
+            <!-- 替换内容-->
+            <div class="index  height-40">
+
+            </div>
+            <div class="font-size-25 font-weight-600">
+                修改用户信息
+            </div>
+            <div class="chunk_back col-lg-12 margin-top-10 report shade ">
+                <form method="POST" action="{:url('user/index')}" enctype="multipart/form-data">
+
+                    <!--key	<input name="key" type="text" value=""><br>-->
+                    <!--secret_key	<input name="secret_key" type="text" value=""><br>-->
+                    page	<input name="customer_name" type="page" value=""><br>
+
+                    license_plate_no	<input name="license_plate_no" type="type" value=""><br>
+
+                    pay_time	<input name="pay_time" type="date" value=""><br>
+
+                    first_amount	<input name="first_amount" type="type" value=""><br>
+
+                    rent_weixin_amount	<input name="rent_weixin_amount" type="type" value=""><br>
+                    rent_ali_amount	<input name="rent_ali_amount" type="type" value=""><br>
+                    rent_weixin_amount	<input name="rent_weixin_amount" type="type" value=""><br>
+                    rent_card_amount	<input name="rent_card_amount" type="type" value=""><br>
+                    rent_cash_amount	<input name="rent_cash_amount" type="type" value=""><br>
+                    rent_other_amount	<input name="rent_other_amount" type="type" value=""><br>
+                    weixin_amount	<input name="weixin_amount" type="type" value=""><br>
+                    ali_amount	<input name="ali_amount" type="type" value=""><br>
+                    manager_amount	<input name="manager_amount" type="type" value=""><br>
+                    comment	<input name="comment" type="type" value=""><br>
+
+                    <button type="submit">确认新增</button>
+                </form>
+            </div>
+            <!--替换内容-->
+        </div>
+    </div>
+</div>
