@@ -13,10 +13,11 @@
     <link rel="stylesheet" href="__static__admin/fonts/glyphicons-halflings-regular.ttf">
     <link rel="stylesheet" href="__static__admin/fonts/glyphicons-halflings-regular.woff">
     <link rel="stylesheet" href="__static__admin/fonts/glyphicons-halflings-regular.woff2">
+
+    <script  type="text/javascript" src="__static__admin/js/jquery-1.11.1.min.js"></script>
     <title>Document</title>
 </head>
 <body>
-
     <div class="container-fluid navigation-bk  font-color-fff">
             <div class="row height-60">
                 <div class="col-lg-6  text-level-left clearfix">
@@ -29,9 +30,9 @@
                 </div>
                 <div class="col-lg-6  text-level-right clearfix">
                     <div class="pull-right text-level-center">
-                        <div class="">身份</div>
+                        <div class="nickname">身份</div>
                         <div class=" ">
-                            <span class="">退出</span>
+                            <a href="{:url('login/signOut')}"><span class="" style="color: #fff;">退出</span></a>
                             <span> &nbsp | &nbsp </span>
                             <span class="">更换账号</span>
                         </div>
@@ -40,9 +41,23 @@
                         <img src="__static__/admin/image/eamil.png" alt="邮箱" class="image-yuan">
                     </div>
                     <div class="pull-right padding-right-10">
-                        <img src="__static__/admin/image/eamil.png" alt="头像" class="image-yuan">
+                        <img src="http://www.qq745.com/uploads/allimg/150107/1-15010FQH6-51.jpg" alt="头像" id="head_img" class="image-yuan">
                     </div>
                 </div>
         </div>
     </div>
 
+    <script>
+
+        $(document).ready(function (){
+            $.post("{:url('login/getUserInfo')}",function(data){
+                console.log(data);
+                document.getElementById("head_img").src=data.avatar_url;
+                console.log(data.nick_name)
+                $('.nickname').html(data.nick_name);
+
+
+            });
+
+        });
+    </script>

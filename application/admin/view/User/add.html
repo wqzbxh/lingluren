@@ -1,6 +1,6 @@
-<title>老师管理界面</title>
+<title>导师管理界面</title>
 
-<div class="container-fluid" style="background-color: #F6F8F9;height: 800px;">
+<div class="container-fluid" style="background-color: #F6F8F9;">
     <div class="row ">
 
         <!--左部菜单部分-->
@@ -17,9 +17,250 @@
             <div class="font-size-25 font-weight-600">
                 新增用户
             </div>
-            <div class="chunk_back col-lg-12 margin-top-10 report shade ">
+            <div class=" col-lg-12 margin-top-25 text-level-center">
+                <div class="col-lg-1 activer">添加学生</div>
+                <div class="col-lg-1 addstyle">添加家长</div>
+                <div class="col-lg-1 addstyle">添加导师</div>
+                <div class="col-lg-9 addstyle">　</div>
+            </div>
+<!--个人基础信息-->
+            <form action="{:url('user/addAction')}" method="post" enctype="multipart/form-data" id="tab1">
+            <div class="col-lg-12 report shade  margin-top-25 bk-fff margin-bottom-20 padding-bottom-10">
+                <div class="col-lg-12">
+                    <div class="font-size-18">个人基础信息</div>
+                </div>
+                <div class="col-lg-6  margin-top-35">
+                       <span class="redColor"> ❋ </span> FirstName　　<input type="text" name="FirstName" placeholder="姓氏" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>  LastName　　<input type="text" name="LastName" placeholder="名称" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span> Gender　　　　<input type="radio" name="sex"  value="1" checked> 男　　　<input type="radio" name="sex"  value="2"> 女
+                </div>
+                <!--国籍-->
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>  Nationality　　<input type="text" name="Nationality" placeholder="国籍" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span> Telephone　　<input type="text" name="telephone" placeholder="手机号" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>  Date Of Birth　　<input type="date" name="birth_date" placeholder="生日" class="inputClass">
+                </div>
+
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span> Passport No　　<input type="text" name="passport_no" placeholder="护照号码" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span> Passport Issue Date　　<input type="date" name="passport_issue_date" placeholder="护照签发日期" class="inputClass">
+                </div>
+
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>  Passport Expiry Date　　<input type="date" name="passport_expiry_date" placeholder="护照到期日期" class="inputClass">
+                </div>
+
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>Emergency Contact　 <input type="text" name="emergency_contact" placeholder="紧急联络人" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span> Emergency Telephone　　<input type="date" name="emergency_telephone" placeholder="紧急联系电话" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>Emergency Email　 <input type="text" name="emergency_email" placeholder="紧急联系人邮件" class="inputClass">
+                </div>
+
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>Relationship　 <input type="text" name="relationship" placeholder="与你的关系" class="inputClass">
+                </div>
 
             </div>
+<!--家庭信息-->
+
+            <div class="col-lg-12 report shade margin-top-25 bk-fff margin-bottom-20 padding-bottom-10">
+                <div class="col-lg-12">
+                    <div class="font-size-18">家庭信息 - 父亲</div>
+                </div>
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span> FirstName　　<input type="text" name="parent_name" placeholder="姓氏" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>  LastName　　<input type="text" name="parent_last_name" placeholder="名称" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>  Nationality　　<input type="text" name="parent_nationality" placeholder="国籍" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span> Telephone　　<input type="text" name="parent_telephone" placeholder="手机号" class="inputClass">
+                </div>
+
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>  Company　<input type="text" name="parent_company" placeholder="父母所在公司" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>  Date Of Birth　　<input type="text" name="parent_job" placeholder="父母工作职位" class="inputClass">
+                </div>
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>  Date Of Birth　　<input type="date" name="parent_birth_date" placeholder="出生日期" class="inputClass">
+                </div>
+
+            </div>
+
+<!--地址信息-->
+
+
+            <div class="col-lg-12 report shade margin-top-25 bk-fff margin-bottom-20 padding-bottom-20">
+                <div class="col-lg-12">
+                    <div class="font-size-18">地址信息</div>
+                </div>
+
+
+                <div class="col-lg-9 margin-1 font-color-ccc ">
+                    <div class="font-size-18 text-level-center">-----------------------------------------------------------------------------　Permanent Address　-----------------------------------------------------------------------------</div>
+                </div>
+
+
+                <div class="col-lg-6  margin-top-35">
+
+                    <div class="col-lg-3"  style="margin-left: -1rem;">
+                        <span class="redColor ce"> ❋ </span> Street Address　
+                    </div>
+                    <div class="col-lg-9 text-level-left margin-left-04">
+                        　<textarea  name="street_address　" placeholder="Room 601, no. 485, nanlin road, sanlin town, pudong new area." style="height: 100px;width: 360px" class="inputClass"></textarea>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>  Zip Code　　<input type="text" name="permanent_zip_code" placeholder="邮政编码" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+
+                    <div class="col-lg-2" style="margin-left: -1rem;">
+                        <span class="redColor"> ❋ </span>  Address
+                    </div>
+                    <div class="col-lg-10 text-level-left"  style="margin-left: -4rem;">
+                        <div data-toggle="distpicker" class="col-lg-12">
+                            <div class="form-group col-lg-4" >
+                                <label class="sr-only " for="province1">Province</label>
+                                <select class="form-control " id="province1" name="permanent_province"></select>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label class="sr-only" for="city1">City</label>
+                                <select class="form-control" id="city1" name="permanent_city"></select>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label class="sr-only" for="district1">District</label>
+                                <select class="form-control" id="district1" name="permanent_district"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span> Telephone　　<input type="text" name="permanent_telephone" placeholder="手机号" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-20">
+                    <span class="redColor"> ❋ </span>  Valid Until　　<input type="date" name="permanent_date" placeholder="失效日期" class="inputClass">
+                </div>
+
+
+
+
+                <div class="col-lg-9 margin-2 font-color-ccc ">
+                    <div class="font-size-18 text-level-center">-----------------------------------------------------------------------------　Email Address　-----------------------------------------------------------------------------</div>
+                </div>
+
+
+                <div class="col-lg-6  margin-top-35">
+
+                    <div class="col-lg-3"  style="margin-left: -1rem;">
+                        <span class="redColor ce"> ❋ </span> Street Address　
+                    </div>
+                    <div class="col-lg-9 text-level-left  margin-left-04">
+                        　<textarea  name="mailing_street_address" placeholder="Car alarms constantly scream at us in the street and are a source of profound irritation ." style="height: 100px;width: 360px" class="inputClass"></textarea>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>  Zip Code　　<input type="text" name="mailing_code" placeholder="邮政编码" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+
+                    <div class="col-lg-2" style="margin-left: -1rem;">
+                        <span class="redColor"> ❋ </span>  Address
+                    </div>
+                    <div class="col-lg-10 text-level-left"  style="margin-left: -4rem;">
+                        <div data-toggle="distpicker" class="col-lg-12">
+                            <div class="form-group col-lg-4" >
+                                <label class="sr-only " for="province1">Province</label>
+                                <select class="form-control " id="province" name="mailing_province"></select>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label class="sr-only" for="city1">City</label>
+                                <select class="form-control" id="city" name="mailing_city"></select>
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label class="sr-only" for="district1">District</label>
+                                <select class="form-control" id="district" name="mailing_district"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span> Telephone　　<input type="text" name="mailing_elephone" placeholder="手机号码" class="inputClass">
+                </div>
+
+                <div class="col-lg-6  margin-top-35">
+                    <span class="redColor"> ❋ </span>  Valid Until　　<input type="date" name="mailing_valid_date" placeholder="失效日期" class="inputClass">
+                </div>
+
+
+
+            </div>
+<!--地址结束-->
+
+
+        <!--按钮 -->
+            <div class="col-lg-12 report shade  margin-top-35 margin-bottom-20 " >
+                <div class="btn col-lg-4  text-level-center navigation-bk font-color-fff">
+                       <button class="btn btn col-lg-12" style="background: none" type="submit">  新增</button>
+                </div>
+                <div class="btn col-lg-2 text-level-center  font-color-fff bk-ccc">
+                    <button class="btn btn col-lg-12" style="background: none" type="button">  取消</button>
+                </div>
+                <div class="btn col-lg-1 text-level-center  font-color-fff bk-red">
+                    <button class="btn btn col-lg-12" style="background: none" type="reset">  重置</button>
+                </div>
+            </div>
+            </form>
+
+            <form action="">
+                tab2
+            </form>
             <!--替换内容-->
         </div>
     </div>

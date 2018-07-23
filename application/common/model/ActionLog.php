@@ -17,8 +17,15 @@ class ActionLog extends Model
      */
     const ERRORCODE = array(
         1 => "SUCCESS",
-        100001 => '该系统找不到此用户!',
-        100002 => '删除用户信息失败',
+        100001 => '该系统找不到此用户!The system can\'t find this user!',
+        100002 => '删除用户信息失败!Deletion of user information failed!',
+        100003 => '用户名不能为空！User name cannot be empty!',
+        100004 => '密码不能为空！Password cant be empty!',
+        100005 => '账号暂时不能登陆，请联系管理员恢复账号！The account cannot be logged in temporarily, please contact the administrator to restore the account!',
+        100006 => '姓氏不能为空！FirstName cannot be empty!',
+        100007 => '名称不能为空！LastName cannot be empty!',
+        100008 => '手机号不能为空！Cell phone number cannot be empty!',
+        100009 => '账号暂时不能登陆，请联系管理员恢复账号！The account cannot be logged in temporarily, please contact the administrator to restore the account!'
     );
 
     /**

@@ -1,0 +1,101 @@
+<title>老师管理界面</title>
+
+<div class="container-fluid" style="background-color: #F6F8F9;height: 800px;">
+    <div class="row ">
+
+        <!--左部菜单部分-->
+        <div class="menu col-lg-2">
+            {include file="layout/side"}
+        </div>
+
+        <!--右部详细页面内容部分-->
+        <div class="col-lg-10">
+            <!-- 替换内容-->
+            <div class="index  height-40">
+
+            </div>
+            <div class="font-size-25 font-weight-600">
+              四年规划
+            </div>
+            <div class="chunk_back col-lg-12 margin-top-10 report shade ">
+                <form method="POST" action="{:url('programme/index')}?type=" enctype="multipart/form-data">
+                    <div class="col-lg-6">
+                        <input type="text" name="search" placeholder="输入导师姓名/学生姓名/四年规划表名称" class="nborder-radio-5 col-lg-6" style="width:360px;height: 35px;" >
+                        <a href="{:url('programme/index')}?type="><button class="col-lg-6 glyphicon glyphicon-search font-size-25" style="border:none;background: none;width: 20px;color:#ccc;margin-top:5px;display: block"></button></a>
+                    </div>
+                </form>
+                <div class="tabel col-lg-12">
+                    <form method="POST" action="{:url('programme/index')}?type=" enctype="multipart/form-data">
+                        <!--按时间进行查询-->
+                        <div class="margin-top-20 margin-left-03">　　　
+                            <input type="date" name="start_time" style="width:150px;height: 30px;border-radius: 5px;height: 30px;"> 　至　 <input type="date" name="end_time" style="border-radius: 5px;height: 30px;width:150px;height: 30px;">
+                            　　　　　    <button class="btn btn_gre" type="submit" style=" color: #fff;background-color: #66CCC4;border-color: #66CCC4;height: 30px;">查询</button>
+                        </div>
+                        <!--end 按时间进行查询结束-->
+                        <table class="table table-striped text-level-center margin-top-20">
+                            <tr class="">
+                                <td>四年规划表名称</td>  <td>导师姓名</td> <td>学生姓名</td> <td>操作</td>
+                            </tr>
+                            <!--循环输出用户基本信息-->
+
+                            <tr>
+                                <td>四年规划0001</td>
+                                <td>领路人海海</td>
+                                <td>瑾瑾，甜甜</td>
+                                <td>
+                                    <span>  <a href="{:url('programme/edit',['id'=>1])}"><img class="index_ico" src="__static__/admin/image/edit.png" alt="" id=""></a></span>
+                                    <span  onclick="del()" ><img class="index_ico"  src="__static__/admin/image/del.png" alt="" id="del"></span>
+                                </td>
+                            </tr>
+
+
+
+                            <tr>
+                                <td>四年规划0002</td>
+                                <td>领路人海海</td>
+                                <td>海海,洋洋，真真，高高，兴兴</td>
+                                <td>
+                                    <span>  <a href="{:url('programme/edit',['id'=>1])}"><img class="index_ico" src="__static__/admin/image/edit.png" alt="" id=""></a></span>
+                                    <span  onclick="del()" ><img class="index_ico"  src="__static__/admin/image/del.png" alt="" id="del"></span>
+                                </td>
+                            </tr>
+
+
+
+                            <!--end 输出用信息-->
+
+                            <!--分页-->
+                            <tr>
+                                <td>
+                                    总计10条规划
+                                </td>
+                                <td colspan="4" class="page text-level-right">
+                                    {if condition="($page <= 0)"}
+                                    {else /}
+                                    <a href="{:url('programme/index')}?page={$page-1}"><div class="btn border-radio-5 chunk_back">◄</div></a>
+                                    {/if}
+
+                                    {for start="0" end="$page_list"}
+                                    {if condition="($page == $i)"}
+                                    <a href="{:url('programme/index')}?page={$i}">   <div class="btn font-style-page font-style-page-default" onclick="checkPage({$i})">{$i+1}</div></a>
+                                    {else /}
+                                    <a href="{:url('programme/index')}?page={$i}">   <div class="btn border-radio-5 chunk_back" onclick="checkPage({$i})" >{$i+1}</div></a>
+                                    {/if}
+                                    {/for}
+
+                                    {if condition="($page_list <= 0)"}
+                                    {elseif condition="$page == $page_list-1 " /}
+                                    {else /}
+                                    <a href="{:url('programme/index')}?page={$page+1}"><div class="btn  border-radio-5 chunk_back">►</div></a>
+                                    {/if}
+                                </td>
+                            </tr>
+                            <!--end 分页-->
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <!--替换内容-->
+        </div>
+    </div>
+</div>

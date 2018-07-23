@@ -10,44 +10,38 @@
 
         <!--右部详细页面内容部分-->
         <div class="col-lg-10">
-            <div class="index  height-40">
-
-            </div>
+            <div class="index  height-40"></div>
             <div class="font-size-25 font-weight-600">
-                老师管理
+                {switch name="$r_id" }
+                {case value="2"} 家长管理  {/case}
+                {case value="1"} 学生管理  {/case}
+                {case value="0"} 老师管理  {/case}
+                {default /}
+                {/switch}
             </div>
+
             <div class="chunk_back col-lg-12 margin-top-10 report shade ">
-                <form method="POST" action="{:url('user/index')}" enctype="multipart/form-data">
+
+                <!--按条件进行查询-->
+                <form method="POST" action="{:url('user/index')}?type={$r_id}" enctype="multipart/form-data">
                     <div class="col-lg-6">
-                        <input type="text" name="search"  class="nborder-radio-5 col-lg-6" style="width:240px;height: 35px;" >
-                        <a href="{:url('user/index')}"><button class="col-lg-6 glyphicon glyphicon-search font-size-25" style="border:none;background: none;width: 20px;color:#ccc;margin-top:5px;display: block"></button></a>
+                        <input type="text" name="search" placeholder="输入姓名/昵称/地址/手机号" class="nborder-radio-5 col-lg-6" style="width:240px;height: 35px;" >
+                        <a href="{:url('user/index')}?type={$r_id}"><button class="col-lg-6 glyphicon glyphicon-search font-size-25" style="border:none;background: none;width: 20px;color:#ccc;margin-top:5px;display: block"></button></a>
                     </div>
                 </form>
+                <!--end 按条件进行查询-->
+
                 <div class="col-lg-6 text-level-right">
                     <a href="{:url('user/add')}"><button class="btn btn_gre" style=" color: #fff;background-color: #66CCC4;border-color: #66CCC4;">新增</button></a>
                 </div>
-
                 <div class="tabel col-lg-12">
-                    <form method="POST" action="{:url('user/index')}" enctype="multipart/form-data">
-                        <div class="margin-top-20">
-                            <select name="type" class="nborder-radio-5" id="usertype" style="border-radius: 5px;height: 30px;">
-
-
-                                {switch name="$r_id" }
-                                {case value="2"}  <option value="2" selected = "selected">家长　</option>
-                                                  <option value="1">学生　</option>
-                                {/case}
-                                {case value="1"} <option value="2">家长　</option>
-                                                 <option value="1"  selected = "selected">学生　</option>
-
-                                {/case}
-                                {default /}
-                                {/switch}
-                            </select>
-                            　　　　　　　　
+                    <form method="POST" action="{:url('user/index')}?type={$r_id}" enctype="multipart/form-data">
+                       <!--按时间进行查询-->
+                        <div class="margin-top-20 margin-left-03">　　　
                             <input type="date" name="start_time" style="width:150px;height: 30px;border-radius: 5px;height: 30px;"> 至 <input type="date" name="end_time" style="border-radius: 5px;height: 30px;width:150px;height: 30px;">
                 　　　　　    <button class="btn btn_gre" type="submit" style=" color: #fff;background-color: #66CCC4;border-color: #66CCC4;height: 30px;">查询</button>
                         </div>
+                        <!--end 按时间进行查询结束-->
                         <table class="table table-striped text-level-center margin-top-20">
                             <tr class="">
                                 <td>姓名</td>  <td>性别</td> <td>电话</td> <td>地址</td><td>操作</td>
@@ -61,7 +55,6 @@
                                 {case value="1"} <td>男</td>{/case}
                                 {default /} <td>女</td>
                                 {/switch}
-
                                 <td>{$vo.telephone}</td>
                                 <td>{$vo.address}</td>
                                 <td>
@@ -71,7 +64,9 @@
                                 </td>
                             </tr>
                             {/volist}
+                            <!--end 输出用信息-->
 
+                            <!--分页-->
                             <tr>
                                 <td>
                                     总计{$count}位
@@ -97,6 +92,7 @@
                                     {/if}
                                 </td>
                             </tr>
+                            <!--end 分页-->
                         </table>
                     </form>
                 </div>
@@ -107,9 +103,9 @@
 </div>
 <script>
 
-
+// <!--删除用户信息JS -->
     function del($page) {
-        con=confirm("你确定删除吗?"); //在页面上弹出对话框
+        con=confirm("你确定删除吗?");
         if(con==true){
             $.post("{:url('user/delAction')}",{'id':$page},function(data){
                 console.log(data);
@@ -122,6 +118,6 @@
             });
         }
     }
-
+<!--end 删除用户信息JS-->
 
 </script>

@@ -3,7 +3,7 @@ namespace app\admin\controller;
 use think\Controller;
 
 
-class Index extends Login
+class Programme extends Login
 {
 
     /**
@@ -20,9 +20,13 @@ class Index extends Login
     }
 
 
-
+    /**
+     * @return mixed四年规划
+     */
     public function index()
     {
+        $this->assign('page',10);
+        $this->assign('page_list',5);
         return $this->fetch('index');
     }
     /**
