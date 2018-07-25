@@ -23,13 +23,25 @@ class Index extends Login
 
     public function index()
     {
+        $start_time = date('Y-m-01', strtotime(date("Y-m-d")));
+        $end_time = date('Y-m-d', strtotime("$start_time +1 month -1 day"));
+        $userModel = new \app\common\model\User();
+        $studentCount = $userModel->where(array('r_id'=> 1,'is_del'=>0))->count();
+        $parentCount = $userModel->where(array('r_id'=> 2,'is_del'=>0))->count();
+        $newAdd = $userModel->where('create_time','between time',[$start_time,$end_time])->where(array('is_del'=>0))->count();
+        $this->assign('student_count',$studentCount);
+        $this->assign('parent_count',$parentCount);
+        $this->assign('new_add',$newAdd);
         return $this->fetch('index');
     }
+
     /**
-     * 测试
+     * test
      */
     public function test()
     {
-        return $this->fetch('test');
+        //var_dump($this->userId);exit;
+        $actionLogModel = new \app\common\model\ActionLog();
+        $actionLogModel->addActionLog(1,22,'ces',request()->action().request()->controller(),1);
     }
 }

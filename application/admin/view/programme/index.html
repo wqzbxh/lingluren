@@ -21,7 +21,7 @@
                 <form method="POST" action="{:url('programme/index')}?type=" enctype="multipart/form-data">
                     <div class="col-lg-6">
                         <input type="text" name="search" placeholder="输入导师姓名/学生姓名/四年规划表名称" class="nborder-radio-5 col-lg-6" style="width:360px;height: 35px;" >
-                        <a href="{:url('programme/index')}?type="><button class="col-lg-6 glyphicon glyphicon-search font-size-25" style="border:none;background: none;width: 20px;color:#ccc;margin-top:5px;display: block"></button></a>
+                        <a href="{:url('programme/index')}"><button class="col-lg-6 glyphicon glyphicon-search font-size-25" style="border:none;background: none;width: 20px;color:#ccc;margin-top:5px;display: block"></button></a>
                     </div>
                 </form>
                 <div class="tabel col-lg-12">
@@ -33,41 +33,30 @@
                         </div>
                         <!--end 按时间进行查询结束-->
                         <table class="table table-striped text-level-center margin-top-20">
-                            <tr class="">
-                                <td>四年规划表名称</td>  <td>导师姓名</td> <td>学生姓名</td> <td>操作</td>
+                            <tr>
+                                <th class="text-level-center">四年规划表名称</th>  <th  class="text-level-center">导师姓名</th> <th  class="text-level-center">学生姓名</th> <th  class="text-level-center">操作</th>
                             </tr>
                             <!--循环输出用户基本信息-->
 
+
+                            {volist name="list" id="vo"}
                             <tr>
-                                <td>四年规划0001</td>
-                                <td>领路人海海</td>
-                                <td>瑾瑾，甜甜</td>
+                                <td>{$vo.schedule_name}</td>
+                                <td>{$vo.name}</td>
+                                <td>{$vo.sname}</td>
                                 <td>
-                                    <span>  <a href="{:url('programme/edit',['id'=>1])}"><img class="index_ico" src="__static__/admin/image/edit.png" alt="" id=""></a></span>
-                                    <span  onclick="del()" ><img class="index_ico"  src="__static__/admin/image/del.png" alt="" id="del"></span>
+                                    <span>  <a href="{:url('user/edit',['id'=> $vo.id])}"><img class="index_ico" src="__static__/admin/image/edit.png" alt="编辑？" id=""></a></span>　
+                                    <span  onclick="del({$vo.id})" ><img class="index_ico"  src="__static__/admin/image/del.png" alt="Delete？" id="del"></span>
+
                                 </td>
                             </tr>
-
-
-
-                            <tr>
-                                <td>四年规划0002</td>
-                                <td>领路人海海</td>
-                                <td>海海,洋洋，真真，高高，兴兴</td>
-                                <td>
-                                    <span>  <a href="{:url('programme/edit',['id'=>1])}"><img class="index_ico" src="__static__/admin/image/edit.png" alt="" id=""></a></span>
-                                    <span  onclick="del()" ><img class="index_ico"  src="__static__/admin/image/del.png" alt="" id="del"></span>
-                                </td>
-                            </tr>
-
-
-
+                            {/volist}
                             <!--end 输出用信息-->
 
                             <!--分页-->
                             <tr>
                                 <td>
-                                    总计10条规划
+                                    总计{$count}条规划
                                 </td>
                                 <td colspan="4" class="page text-level-right">
                                     {if condition="($page <= 0)"}
@@ -98,4 +87,21 @@
             <!--替换内容-->
         </div>
     </div>
-</div>
+</div>g
+<script>
+    function del($page) {
+        con=confirm("Are you sure to delete it?");
+        if(con==true){
+            $.post("{:url('programme/delAction')}",{'id':$page},function(data){
+                console.log(data);
+                if(data['code'] == 1){
+                    alert('deleted successfully!');
+                    location.href = '{:url("programme/index")}';
+                }else{
+                    alert('Delete failed!');
+                }
+
+            });
+        }
+    }
+</script>

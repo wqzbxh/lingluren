@@ -12,7 +12,8 @@ class Programme extends Login
     public function _initialize()
     {
         if(session('mitangUser')){
-            //   var_dump(session('mitangUser'));
+            $this->userId = session('mitangUser')['id'];
+            $this->uername = session('mitangUser')['name'];
         }else{
             $this->redirect('login/login');
         }
@@ -25,12 +26,105 @@ class Programme extends Login
      */
     public function index()
     {
-        $this->assign('page',10);
-        $this->assign('page_list',5);
+        $scheduleModel = new \app\common\model\Schedule();
+        $userModel = new \app\common\model\User();
+        $search = isset($_POST['search']) ? $_POST['search'] : null;
+        $page = isset($_POST['page']) ? $_POST['page'] : 1;
+        $start_time = !empty($_POST['start_time']) ? $_POST['start_time'] : '2018-01-01 00:00:00';
+        $end_time = !empty($_POST['end_time']) ? $_POST['end_time'] : '2028-01-01 00:00:00';
+        $page = isset($_GET['page']) ? $_GET['page'] : 0;
+        $limit =10;
+        $offset = $page * $limit;
+        if(empty($search)){
+            $scheduleRows = $scheduleModel
+                ->alias('s')
+                ->join('user u','u.id = s.t_id',"LEFT" )
+                ->where(array('s.is_show'=>1,'s.is_del'=>0,'s.type'=>1))
+                ->where('s.create_time','between time',[$start_time,$end_time])
+                ->field($scheduleModel->return_field_type1)
+                ->limit($offset,$limit)
+                ->order('s.id desc')
+                ->select()
+                ->toArray();
+            $PlanningList = $userModel->getUserName($scheduleRows);
+            $count = $scheduleModel->where(array('is_show'=>1,'is_del'=>0,'type'=>1))->where('create_time','between time',[$start_time,$end_time])->field($scheduleModel->return_field)->count();
+        }else{
+            $scheduleRows = $scheduleModel
+                ->alias('s')
+                ->join('user u','u.id = s.t_id',"LEFT" )
+                ->where(array('s.is_show'=>1,'s.is_del'=>0,'type'=>1))
+                ->where('s.create_time','between time',[$start_time,$end_time])
+                ->where($scheduleModel->fuzzy_query,'like','%'.$search.'%')
+                ->field($scheduleModel->return_field_type1)
+                ->limit($offset,$limit)
+                ->order('s.id desc')
+                ->select()
+                ->toArray();
+            $PlanningList = $userModel->getUserName($scheduleRows);
+
+            $count  = $scheduleModel
+                ->alias('s')
+                ->join('user u','u.id = s.t_id',"LEFT" )
+                ->where(array('s.is_show'=>1,'s.is_del'=>0,'type'=>1))
+                ->where('s.create_time','between time',[$start_time,$end_time])
+                ->where($scheduleModel->fuzzy_query,'like','%'.$search.'%')
+                ->field($scheduleModel->return_field_type1)
+                ->limit($offset,$limit)
+                ->order('s.id desc')
+                ->count();
+        }
+        $pageList =ceil($count / $limit);
+        $this->assign('list',$PlanningList);
+        $this->assign('page',$page);
+        $this->assign('count',$count);
+        $this->assign('page_list',$pageList);
         return $this->fetch('index');
     }
+
+
+
+
+
+
+    /**
+     * 删除四年规划表
+     */
+
+    public function delAction()
+    {
+        $actionLogModel = new \app\common\model\ActionLog();
+        $scheduleModel = new \app\common\model\Schedule();
+        $returnArray = array();
+        if(!empty($_POST['id'])){
+            $userModel = new \app\common\model\User();
+            $scheduleRow = $scheduleModel->where('id',$_POST['id'])->update(array('is_del'=>1,'update_time'=>date('Y-m-d H:i:s')));
+            if($scheduleRow){
+                $returnArray = array(
+                    'code' => 1,
+                    'mssg' => $actionLogModel::ERRORCODE[1],
+                    'data' => array()
+                );
+                $actionLogModel->addActionLog(1,$this->userId,$this->uername,request()->action().request()->controller(),$_POST['id']);
+            }else{
+                $returnArray = array(
+                    'code' => 100002,
+                    'mssg' => $actionLogModel::ERRORCODE[100002],
+                    'data' => array()
+                );
+            }
+        }else{
+            $returnArray = array(
+                'code' => 100001,
+                'mssg' => $actionLogModel::ERRORCODE[100001],
+                'data' => array()
+            );
+        }
+        return $returnArray;
+    }
+
     /**
      * 测试
+     *
      */
     public function test()
     {

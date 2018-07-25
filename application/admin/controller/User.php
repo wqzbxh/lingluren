@@ -17,7 +17,8 @@ class User extends Login
     public function _initialize()
     {
        if(session('mitangUser')){
-        //   var_dump(session('mitangUser'));
+          // var_dump(session('mitangUser'));
+           $this->userId = session('mitangUser')['id'];
        }else{
            $this->redirect('login/login');
        }
@@ -45,12 +46,68 @@ class User extends Login
         $limit =10;
         $offset = $page * $limit;
         if(empty($search)){
-            $userRows = $userModel->where(array('is_show'=>1,'is_del'=>0,'r_id'=>$type))->where('create_time','between time',[$start_time,$end_time])->field($userModel->field)->limit($offset,$limit)->select()->toArray();
-            $count  = $userModel->where(array('is_show'=>1,'is_del'=>0,'r_id'=>$type))->where('create_time','between time',[$start_time,$end_time])->field($userModel->field)->limit($offset,$limit)->count();
+            switch ($type){
+                case 1:
+                    $userRows = $userModel
+                        ->alias('a')
+                        ->join('user b','a.f_id = b.id',"LEFT" )
+                        ->join('user t','a.t_id = t.id',"LEFT" )
+                        ->where(array('a.is_show'=>1,'a.is_del'=>0,'a.r_id'=>$type))
+                        ->where('a.create_time','between time',[$start_time,$end_time])
+                        ->field($userModel->s_field)
+                        ->limit($offset,$limit)
+                        ->order('a.id desc')
+                        ->select()
+                        ->toArray();
+                    break;
+
+                case 2:
+                    $userRows = $userModel
+                        ->alias('a')
+                        ->join('user b','a.s_id = b.id',"LEFT" )
+                        ->where(array('a.is_show'=>1,'a.is_del'=>0,'a.r_id'=>$type))
+                        ->where('a.create_time','between time',[$start_time,$end_time])
+                        ->field($userModel->f_field)
+                        ->limit($offset,$limit)
+                        ->order('a.id desc')
+                        ->select()
+                        ->toArray();
+
+                    break;
+
+                case 0:
+                    $userRows = $userModel
+                        ->alias('a')
+                        ->where(array('a.is_show'=>1,'a.is_del'=>0,'a.r_id'=>$type))
+                        ->where('a.create_time','between time',[$start_time,$end_time])
+                        ->field($userModel->t_field)
+                        ->limit($offset,$limit)
+                        ->order('a.id desc')
+                        ->select()
+                        ->toArray();
+                    break;
+
+                default:
+                    $userRows = $userModel
+                        ->alias('a')
+                        ->join('user b','a.s_id = b.id',"LEFT" )
+                        ->where(array('a.is_show'=>1,'a.is_del'=>0,'a.r_id'=>$type))
+                        ->where('a.create_time','between time',[$start_time,$end_time])
+                        ->field($userModel->f_field)
+                        ->limit($offset,$limit)
+                        ->order('a.id desc')
+                        ->select()
+                        ->toArray();
+
+
+            }
+
+            $count  = $userModel->where(array('is_show'=>1,'is_del'=>0,'r_id'=>$type))->where('create_time','between time',[$start_time,$end_time])->field($userModel->t_field)->limit($offset,$limit)->count();
         }else{
-            $userRows = $userModel->where(array('is_show'=>1,'is_del'=>0,'r_id'=>$type))->where($userModel->fuzzy_query,'like','%'.$search.'%')->where('create_time','between time',[$start_time,$end_time])->field($userModel->field)->limit($offset,$limit)->select()->toArray();
-            $count = $userModel->where(array('is_show'=>1,'is_del'=>0,'r_id'=>$type))->where($userModel->fuzzy_query,'like','%'.$search.'%')->where('create_time','between time',[$start_time,$end_time])->field($userModel->field)->limit($offset,$limit)->count();
+            $userRows = $userModel->where(array('is_show'=>1,'is_del'=>0,'r_id'=>$type))->where($userModel->fuzzy_query,'like','%'.$search.'%')->where('create_time','between time',[$start_time,$end_time])->field($userModel->t_field)->limit($offset,$limit)->select()->toArray();
+            $count = $userModel->where(array('is_show'=>1,'is_del'=>0,'r_id'=>$type))->where($userModel->fuzzy_query,'like','%'.$search.'%')->where('create_time','between time',[$start_time,$end_time])->field($userModel->t_field)->limit($offset,$limit)->count();
         }
+
         $pageList =ceil($count / $limit);
         $this->assign('list',$userRows);
         $this->assign('r_id',$type);
@@ -70,6 +127,22 @@ class User extends Login
         return $this->fetch('add');
     }
 
+
+
+    /**
+     *  新增父母用户
+     * @param id 学生用户编号
+     */
+    public function addParents()
+    {
+        $actionModel = new \app\common\model\ActionLog();
+        if(!empty($_GET['id'])){
+            $this->assign('s_id',$_GET['id']);
+            return $this->fetch('add_parents');
+        }else{
+            echo "<script>alert('".$actionModel::ERRORCODE[100010]."');location.href='../../index.html?type=1'</script>";
+        }
+    }
 
 
     /**
@@ -99,7 +172,7 @@ class User extends Login
     {
         $returnArray = array();
         $street_address = '';
-      //  var_dump(session('mitangUser'));
+        $mailing_street_address = '';
         $actionModel = new \app\common\model\ActionLog();
 
 
@@ -115,6 +188,7 @@ class User extends Login
 
         if (!empty($_POST['LastName'])) {
             $ming = $_POST['LastName'];
+            $data['name'] = $xing.$ming;
         } else {
             $returnArray = array(
                 'code' => 100007,
@@ -129,7 +203,6 @@ class User extends Login
 
         if (!empty($_POST['telephone'])) {
             $data['telephone'] = $_POST['telephone'];
-            echo substr($data['telephone'] ,-2,6);exit;
             $data['password'] = sha1($data['telephone']);
         }else{
             $returnArray = array(
@@ -146,15 +219,19 @@ class User extends Login
         if(!empty($_POST['passport_no'])){
             $data['passport_no'] = $_POST['passport_no'];
         }
+
         if(!empty($_POST['passport_issue_date'])){
             $data['passport_issue_date'] = $_POST['passport_issue_date'];
         }
+
         if(!empty($_POST['passport_expiry_date'])){
             $data['passport_expiry_date'] = $_POST['passport_expiry_date'];
         }
+
         if(!empty($_POST['emergency_contact'])){
             $data['emergency_contact'] = $_POST['emergency_contact'];
         }
+
         if(!empty($_POST['emergency_telephone'])){
             $data['emergency_telephone'] = $_POST['emergency_telephone'];
         }
@@ -162,25 +239,30 @@ class User extends Login
         if(!empty($_POST['parent_name'])){
             $parentName = $_POST['parent_name'];
         }
+
         if(!empty($_POST['parent_last_name'])){
             $parentLastName = $_POST['parent_last_name'];
         }
+
         if(!empty($_POST['parent_telephone'])){
             $data['parent_telephone'] = $_POST['parent_telephone'];
         }
+      //  var_dump($_POST);exit;
         if(!empty($_POST['parent_birth_date'])){
             $data['parent_birth_date'] = $_POST['parent_birth_date'];
         }
+
         if(!empty($_POST['parent_company'])){
             $data['parent_company'] = $_POST['parent_company'];
         }
+
         if(!empty($_POST['parent_job'])) {
             $data['parent_job'] = $_POST['parent_job'];
         }
-        if (!empty($_POST['parent_nationality'])) {
-            $data['parent_nationality'] = $_POST['parent_nationality'];
-        }
 
+        if (!empty($_POST['parent_nationality'])) {
+            $data['nationality'] = $_POST['parent_nationality'];
+        }
 
 
         if (!empty($_POST['street_address'])) {
@@ -191,26 +273,73 @@ class User extends Login
             $data['email'] = $_POST['permanent_zip_code'];
         }
 
-
-
         if (!empty($_POST['permanent_province']) && !empty($_POST['permanent_city']) && !empty($_POST['permanent_district']) ) {
-            $data['email_address'] = $_POST['permanent_province'].'|'.$_POST['permanent_city'].'|'.$_POST['permanent_district'].'|'.$street_address;
+            $data['address'] = $_POST['permanent_province'].'|'.$_POST['permanent_city'].'|'.$_POST['permanent_district'].'|'.$street_address;
         }
 
         if (!empty($_POST['permanent_telephone'])) {
-            $data['permanent_telephone'] = $_POST['permanent_telephone'];
+            $data['telephone'] = $_POST['permanent_telephone'];
+            $data['password'] = sha1($data['telephone']);
         }
 
         if (!empty($_POST['permanent_date'])) {
             $data['permanent_date'] = $_POST['permanent_date'];
         }
+
+
+
         if (!empty($_POST['mailing_street_address'])) {
-            $data['parent_nationality'] = $_POST['mailing_street_address'];
+            $data['mailing_street_address'] = $_POST['mailing_street_address'];
+        }
+
+        if (!empty($_POST['mailing_code'])) {
+            $data['mailing_code'] = $_POST['mailing_code'];
         }
 
 
+        if (!empty($_POST['mailing_province']) && !empty($_POST['mailing_city']) && !empty($_POST['mailing_district']) ) {
+            $data['mailing_street_address'] = $_POST['mailing_province'].'|'.$_POST['mailing_city'].'|'.$_POST['mailing_district'].'|'.$street_address;
+        }
 
+        if (!empty($_POST['mailing_telephone'])) {
+            $data['mailing_telephone'] = $_POST['mailing_telephone'];
+        }
 
+        if (!empty($_POST['mailing_valid_date'])) {
+            $data['mailing_valid_date'] = $_POST['mailing_valid_date'];
+        }
+
+        $data['r_id'] = $_POST['r_id'];
+        $data['s_id'] = isset($_POST['s_id']) ? $_POST['s_id'] : 0;
+        $data['t_id'] = $this->userId;
+        $data['create_time'] = date('Y-m-d H:i:s');
+        if(empty($returnArray)){
+            $userModel = new \app\common\model\User();
+            $userResult = $userModel->create($data);
+            if($userResult){
+                switch ($data['r_id']){
+                    case 1:
+                        echo "<script>alert('".$actionModel::ERRORCODE[1]."');location.href='../../index.html?type=1'</script>";
+                        break;
+                    case 2:
+                        $row = $userResult->toArray();
+                        $userModel->where(array('id'=>$data['s_id']))->update(array('f_id'=>$row['id']));
+                        echo "<script>alert('".$actionModel::ERRORCODE[1]."');location.href='index.html'</script>";
+                        break;
+                    case 3:
+                        echo "<script>alert('".$actionModel::ERRORCODE[1]."');location.href='../../index.html?type=3'</script>";
+                        break;
+                    default:
+                        echo "<script>alert('".$actionModel::ERRORCODE[1]."');location.href='index.html'</script>";
+                }
+            }else{
+                return $actionModel::ERRORCODE[100009];
+            }
+        }else{
+
+            var_dump($returnArray);
+            echo "<script>alert('".$actionModel::ERRORCODE[100009]."');location.href='add.html'</script>";
+        }
 
 
     }
@@ -220,6 +349,9 @@ class User extends Login
      */
     public function delAction()
     {
+
+
+
         $actionLogModel = new \app\common\model\ActionLog();
         $userModel = new \app\common\model\User();
         $returnArray = array();
@@ -232,21 +364,22 @@ class User extends Login
                     'mssg' => $actionLogModel::ERRORCODE[1],
                     'data' => array()
                 );
-              //  $actionLogModel->addActionLog(1,$this->user_id,$this->username,'删除了编号为'.$_POST['id'].'的用户');
+                //  $actionLogModel->addActionLog(1,$this->user_id,$this->username,'删除了编号为'.$_POST['id'].'的用户');
             }else{
                 $returnArray = array(
                     'code' => 100002,
-                    'mssg' => $actionLogModel::ERRORCODE[100002],
+                    'mssg' => $actionLogModel::ERRORCODE[200001],
                     'data' => array()
                 );
             }
         }else{
-           $returnArray = array(
+            $returnArray = array(
                 'code' => 100001,
-                'mssg' => $actionLogModel::ERRORCODE[100001],
+                'mssg' => $actionLogModel::ERRORCODE[200002],
                 'data' => array()
-           );
+            );
         }
+
         return $returnArray;
     }
 }

@@ -18,116 +18,62 @@
                 新增用户
             </div>
             <div class=" col-lg-12 margin-top-25 text-level-center">
-                <div class="col-lg-1 activer">添加学生</div>
-                <div class="col-lg-1 addstyle">添加家长</div>
+                <a href="{:url('user/add')}"><div class="col-lg-1 addstyle">添加学生</div></a>
+                <div class="col-lg-1 activer">添加家长</div>
                 <div class="col-lg-1 addstyle">添加导师</div>
                 <div class="col-lg-9 addstyle">　</div>
             </div>
 <!--个人基础信息-->
             <form action="{:url('user/addAction')}" method="post" enctype="multipart/form-data" id="tab1">
-            <div class="col-lg-12 report shade  margin-top-25 bk-fff margin-bottom-20 padding-bottom-10">
+
+
+
+            <div class="col-lg-12 report shade margin-top-25 bk-fff margin-bottom-20 padding-bottom-10">
                 <div class="col-lg-12">
-                    <div class="font-size-18">个人基础信息</div>
+                    <div class="font-size-18">家庭监护人信息</div>
                 </div>
                 <div class="col-lg-6  margin-top-35">
-                       <span class="redColor"> ❋ </span> FirstName　　<input type="text" name="FirstName" placeholder="姓氏" class="inputClass">　<input type="hidden" name="r_id" value="1" class="inputClass">
+                    <span class="redColor"> ❋ </span> FirstName　　
+                    <input type="text" name="FirstName" placeholder="姓氏" class="inputClass">
+                    <input type="hidden" name="r_id" placeholder="" value="2" class="inputClass">
+                    <input type="hidden" name="s_id" placeholder="" value="{$s_id}" class="inputClass">
                 </div>
 
                 <div class="col-lg-6  margin-top-35">
                     <span class="redColor"> ❋ </span>  LastName　　<input type="text" name="LastName" placeholder="名称" class="inputClass">
                 </div>
+                <div class="col-lg-6  margin-top-35">
+                <span class="redColor"> ❋ </span> Parents type　       <input type="radio" name="parent_type"  value="1" checked> 父亲　　　<input type="radio" name="parent_type"  value="2"> 母亲 　<input type="radio" name="parent_type"  value="3"> 其他
+            </div>
 
                 <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span> Gender　　　　<input type="radio" name="sex"  value="1" checked> 男　　<input type="radio" name="sex"  value="2"> 女
-                </div>
-                <!--国籍-->
-                <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span>  Nationality　　<input type="text" name="Nationality" placeholder="国籍" class="inputClass">
+                    <span class="redColor"> ❋ </span>  Nationality　　<input type="text" name="nationality" placeholder="国籍" class="inputClass">
                 </div>
 
                 <div class="col-lg-6  margin-top-35">
                     <span class="redColor"> ❋ </span> Telephone　　<input type="text" name="telephone" placeholder="手机号" class="inputClass">
                 </div>
 
-                <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span>  Date Of Birth　　<input type="date" name="birth_date" placeholder="生日" class="inputClass">
-                </div>
-
 
                 <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span> Passport No　　<input type="text" name="passport_no" placeholder="护照号码" class="inputClass">
+                    <span class="redColor"> ❋ </span>  Company　<input type="text" name="parent_company" placeholder="父母所在公司" class="inputClass">
                 </div>
 
                 <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span> Passport Issue Date　　<input type="date" name="passport_issue_date" placeholder="护照签发日期" class="inputClass">
+                    <span class="redColor"> ❋ </span>  Date Of Job　　<input type="text" name="parent_job" placeholder="父母工作职位" class="inputClass">
                 </div>
-
-
                 <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span>  Passport Expiry Date　　<input type="date" name="passport_expiry_date" placeholder="护照到期日期" class="inputClass">
-                </div>
-
-
-                <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span>Emergency Contact　 <input type="text" name="emergency_contact" placeholder="紧急联络人" class="inputClass">
-                </div>
-
-                <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span> Emergency Telephone　　<input type="date" name="emergency_telephone" placeholder="紧急联系电话" class="inputClass">
-                </div>
-
-                <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span>Emergency Email　 <input type="text" name="emergency_email" placeholder="紧急联系人邮件" class="inputClass">
-                </div>
-
-
-                <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span>Relationship　 <input type="text" name="relationship" placeholder="与你的关系" class="inputClass">
+                    <span class="redColor"> ❋ </span>  Date Of Birth　　<input type="date" name="birth_date" placeholder="出生日期" class="inputClass">
                 </div>
 
             </div>
-<!--家庭信息-->
-
-            <!--<div class="col-lg-12 report shade margin-top-25 bk-fff margin-bottom-20 padding-bottom-10">-->
-                <!--<div class="col-lg-12">-->
-                    <!--<div class="font-size-18">家庭信息 - 父亲</div>-->
-                <!--</div>-->
-                <!--<div class="col-lg-6  margin-top-35">-->
-                    <!--<span class="redColor"> ❋ </span> FirstName　　<input type="text" name="parent_name" placeholder="姓氏" class="inputClass">-->
-                <!--</div>-->
-
-                <!--<div class="col-lg-6  margin-top-35">-->
-                    <!--<span class="redColor"> ❋ </span>  LastName　　<input type="text" name="parent_last_name" placeholder="名称" class="inputClass">-->
-                <!--</div>-->
-
-                <!--<div class="col-lg-6  margin-top-35">-->
-                    <!--<span class="redColor"> ❋ </span>  Nationality　　<input type="text" name="parent_nationality" placeholder="国籍" class="inputClass">-->
-                <!--</div>-->
-
-                <!--<div class="col-lg-6  margin-top-35">-->
-                    <!--<span class="redColor"> ❋ </span> Telephone　　<input type="text" name="parent_telephone" placeholder="手机号" class="inputClass">-->
-                <!--</div>-->
-
-
-                <!--<div class="col-lg-6  margin-top-35">-->
-                    <!--<span class="redColor"> ❋ </span>  Company　<input type="text" name="parent_company" placeholder="父母所在公司" class="inputClass">-->
-                <!--</div>-->
-
-                <!--<div class="col-lg-6  margin-top-35">-->
-                    <!--<span class="redColor"> ❋ </span>  Date Of Birth　　<input type="text" name="parent_job" placeholder="父母工作职位" class="inputClass">-->
-                <!--</div>-->
-                <!--<div class="col-lg-6  margin-top-35">-->
-                    <!--<span class="redColor"> ❋ </span>  Date Of Birth　　<input type="date" name="parent_birth_date" placeholder="出生日期" class="inputClass">-->
-                <!--</div>-->
-
-            <!--</div>-->
 
 <!--地址信息-->
 
 
             <div class="col-lg-12 report shade margin-top-25 bk-fff margin-bottom-20 padding-bottom-20">
                 <div class="col-lg-12">
-                    <div class="font-size-18">地址信息</div>
+                    <div class="font-size-18">家庭监护人地址信息</div>
                 </div>
 
 
@@ -137,14 +83,12 @@
 
 
                 <div class="col-lg-6  margin-top-35">
-
                     <div class="col-lg-3"  style="margin-left: -1rem;">
                         <span class="redColor ce"> ❋ </span> Street Address　
                     </div>
                     <div class="col-lg-9 text-level-left margin-left-04">
                         　<textarea  name="street_address" placeholder="Room 601, no. 485, nanlin road, sanlin town, pudong new area." style="height: 100px;width: 360px" class="inputClass"></textarea>
                     </div>
-
                 </div>
 
                 <div class="col-lg-6  margin-top-35">

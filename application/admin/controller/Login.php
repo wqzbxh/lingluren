@@ -9,6 +9,8 @@ class Login extends Controller
     public function _initialize()
     {
       if(session('mitangUser') && request()->action() == 'login' ){
+          $this->userId = session('mitangUser')['id'];
+
          $this->redirect('index/index');
       }else{
           self::login();
@@ -104,4 +106,9 @@ class Login extends Controller
     {
       return  session('mitangUser');
     }
+
+
+
+
+
 }
