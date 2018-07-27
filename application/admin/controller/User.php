@@ -382,4 +382,13 @@ class User extends Login
 
         return $returnArray;
     }
+
+    /**
+     * 添加导师
+     *
+     */
+    public function teacherAdd()
+    {
+        return $this->fetch('teacher_add');
+    }
 }
