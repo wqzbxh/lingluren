@@ -52,9 +52,11 @@
         $(document).ready(function (){
             $.post("{:url('login/getUserInfo')}",function(data){
                 console.log(data);
-                document.getElementById("head_img").src=data.avatar_url;
+                if(data.avatar_url){
+                    document.getElementById("head_img").src=data.avatar_url;
+                }
                 console.log(data.nick_name)
-                $('.nickname').html(data.nick_name);
+                $('.nickname').html(data.name);
 
 
             });

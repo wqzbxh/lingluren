@@ -20,7 +20,12 @@
             <div class=" col-lg-12 margin-top-25 text-level-center">
                 <div class="col-lg-1 activer">添加学生</div>
                 <div class="col-lg-1 addstyle">添加家长</div>
-                <div class="col-lg-1 addstyle">添加导师</div>
+                {switch name="$r_id" }
+                    {case value="4"}
+                    <div class="col-lg-1 addstyle">添加导师</div>
+                    {/case}
+                {default /}
+                {/switch}
                 <div class="col-lg-9 addstyle">　</div>
             </div>
 <!--个人基础信息-->

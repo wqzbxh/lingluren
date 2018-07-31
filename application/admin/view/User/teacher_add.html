@@ -23,61 +23,110 @@
             </div>
 <!--个人基础信息-->
             <form action="{:url('user/addAction')}" method="post" enctype="multipart/form-data" id="tab1">
-            <div class="col-lg-12 report shade  margin-top-25 bk-fff margin-bottom-20 padding-bottom-10">
-                <div class="col-lg-12">
-                    <div class="font-size-18">个人基础信息</div>
-                </div>
-                <div class="col-lg-6  margin-top-35">
-                       <span class="redColor"> ❋ </span> 姓名　　<input type="text" name="name" placeholder="姓氏" class="inputClass">　<input type="hidden" name="r_id" value="1" class="inputClass">
-                </div>
-
-                <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span>  学校　　<input type="text" name="school_name" placeholder="名称" class="inputClass">
-                </div>
-
-                <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span> Gender　　　　<input type="radio" name="sex"  value="1" checked> 男　　<input type="radio" name="sex"  value="2"> 女
-                </div>
-                <!--国籍-->
-                <div class="col-lg-6  margin-top-35">
-                    <span class="redColor"> ❋ </span>  专业方向　　<input type="text" name="Nationality" placeholder="国籍" class="inputClass">
-                </div>
-                <div class="col-lg-6  margin-top-35">
-
-                    <div class="col-lg-3"  style="margin-left: -1rem;">
-                        <span class="redColor ce"> ❋ </span> 个人介绍　
+                 <div class="col-lg-12 report shade  margin-top-25 bk-fff margin-bottom-20 padding-bottom-10">
+                    <div class="col-lg-12">
+                        <div class="font-size-18">个人基础信息</div>
                     </div>
-                    <div class="col-lg-9 text-level-left  margin-left-03">
-                        　<textarea  name="mailing_street_address" placeholder="Car alarms constantly scream at us in the street and are a source of profound irritation ." style="height: 100px;width: 360px" class="inputClass"></textarea>
+                    <div class="col-lg-6  margin-top-35">
+                           <span class="redColor"> ❋ </span> 姓名　　<input type="text" name="FirstName" placeholder="姓氏" class="inputClass">　<input type="hidden" name="r_id" value="0" class="inputClass">　<input type="hidden" name="LastName" value="" class="inputClass">
                     </div>
 
+                    <div class="col-lg-6  margin-top-35">
+                        <span class="redColor"> ❋ </span>  学校　　<input type="text" name="school_name" placeholder="名称" class="inputClass">
+                    </div>
+
+                    <div class="col-lg-6  margin-top-35">
+                        <span class="redColor"> ❋ </span>  手机号　　<input type="text" name="telephone" placeholder="名称" class="inputClass">
+                    </div>
+
+                    <div class="col-lg-6  margin-top-35">
+                        <span class="redColor"> ❋ </span> Gender　　　　<input type="radio" name="sex"  value="1" checked> 男　　<input type="radio" name="sex"  value="2"> 女
+                    </div>
+                    <!--国籍-->
+                    <div class="col-lg-12 margin-top-35">
+                        <span class="redColor"> ❋ </span>  专业方向　　<input type="text" name="major_field" placeholder="专业方向" class="inputClass">
+                        </div>
+
+                    <div class="col-lg-6  margin-top-35">
+                        <div class="col-lg-3"  style="margin-left: -1rem;">
+                            <span class="redColor ce"> ❋ </span> 个人介绍　
+                        </div>
+                        <div class="col-lg-9 text-level-left  margin-left-03" style="margin-left: -8rem;">
+                                　<textarea  name="introductions" placeholder="Car alarms constantly scream at us in the street and are a source of profound irritation ." style="height: 100px;width: 360px" class="inputClass"></textarea>
+                        </div>
+                    </div>
                 </div>
-
-            </div>
-<!--家庭信息-->
+    <!--家庭信息-->
 
 
 
 
 
-        <!--按钮 -->
-            <div class="col-lg-12 report shade  margin-top-35 margin-bottom-20 " >
-                <div class="btn col-lg-4  text-level-center navigation-bk font-color-fff">
-                       <button class="btn btn col-lg-12" style="background: none" type="submit">  新增</button>
+            <!--按钮 -->
+                <!--<div class="col-lg-12 report shade  margin-top-35 margin-bottom-20 " >-->
+                    <!--<div class="btn col-lg-4  text-level-center navigation-bk font-color-fff">-->
+                           <!--<button class="btn btn col-lg-12" style="background: none" type="submit">  新增</button>-->
+                    <!--</div>-->
+                    <!--<div class="btn col-lg-2 text-level-center  font-color-fff bk-ccc">-->
+                        <!--<button class="btn btn col-lg-12" style="background: none" type="button">  取消</button>-->
+                    <!--</div>-->
+                    <!--<div class="btn col-lg-1 text-level-center  font-color-fff bk-red">-->
+                        <!--<button class="btn btn col-lg-12" style="background: none" type="reset">  重置</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+
+
+                    <div class="col-lg-12 report shade  margin-top-35 margin-bottom-20 " >
+                        <div class="col-lg-12">
+                            <div class="font-size-18">课程</div>
+                        </div>
+                        <div class="col-lg-12 margin-top-35">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="bk-ccc ">
+                                        <th class="text-level-center">课程</th>
+                                        <th class="text-level-center">链接</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                    <tr>
+                                        <td>
+                                            <input type="text"  name="className[]" placeholder="请输入课程" width="300" class="noborder" style="border:none;background-color: #F6F8F9;outline:none;" >
+                                        </td>
+                                        <td>
+                                            <input type="text"  name="linkName[]" placeholder="请输入连接地址" width="300" class="noborder" style="border:none;background-color: #F6F8F9; outline:none;" >
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tr>
+                                    <td class="text-level-center" colspan="2" onclick="addTr()">
+                                        +
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                <div class="col-lg-12 margin-top-35 selectBtn">
+                    <button class="btn font-color-fff bk-ccc">取消</button>
+                    <button class="btn font-color-fff navigation-bk " id = "selectSure" type="submit">确认</button>
                 </div>
-                <div class="btn col-lg-2 text-level-center  font-color-fff bk-ccc">
-                    <button class="btn btn col-lg-12" style="background: none" type="button">  取消</button>
-                </div>
-                <div class="btn col-lg-1 text-level-center  font-color-fff bk-red">
-                    <button class="btn btn col-lg-12" style="background: none" type="reset">  重置</button>
-                </div>
-            </div>
             </form>
 
-            <form action="">
-
-            </form>
             <!--替换内容-->
         </div>
     </div>
 </div>
+<script>
+    function addTr(){
+        var html = ' <tr>\n' +
+            '<td>\n' +
+            '<input type="text"  name="className[]" placeholder="请输入课程" width="300" class="noborder" style="border:none;background-color: #F6F8F9;outline:none;" >\n' +
+            '</td>\n' +
+            '<td>\n' +
+            '<input type="text"  name="linkName[]" placeholder="请输入连接地址" width="300" class="noborder" style="border:none;background-color: #F6F8F9; outline:none;" >\n' +
+            '</td>\n' +
+            '</tr>';
+        $("#tbody").append(html);
+    }
+</script>

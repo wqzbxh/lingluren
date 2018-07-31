@@ -50,7 +50,7 @@ class Login extends Controller
         }
 
         if(!empty($_POST['mi_password'])){
-            $password = $_POST['mi_password'];
+            $password = sha1($_POST['mi_password']);
         }else{
             $returnArray = array(
                 'code' => 100004,
@@ -62,7 +62,8 @@ class Login extends Controller
 
         if(empty($returnArray)){
             $userModel = new \app\common\model\User();
-            $userReultRow = $userModel->where(array('telephone'=>$username,'password'=>$password,'is_del'=>0))->find()->toArray();
+            $userReultRow = $userModel->where(array('telephone'=>$username,'password'=>$password,'is_del'=>0))->find();
+           var_dump($userReultRow);
             if($userReultRow){
                 //判断是否为禁止登陆
                 if($userReultRow['is_show'] == 1){
@@ -78,6 +79,8 @@ class Login extends Controller
                     );
                     return $returnArray;
                 }
+            }else{
+                echo "<script>alert('".$actionLogModel::ERRORCODE[100011]."');location.href='http://local.mitang.com/admin/login/login.html'</script>";
             }
         }
 

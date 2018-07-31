@@ -27,6 +27,7 @@ class ActionLog extends Model
         100008 => '手机号不能为空！Cell phone number cannot be empty!',
         100009 => '添加失败！fail to add!',
         100010 => '编号传递过程中遗失，刷新重试!Lost in the number transfer process, refresh retry!',
+        100011 => '账号密码错误，刷新重试或联系工作人员!Account password error, refresh retry or contact staff!',
 
 
 

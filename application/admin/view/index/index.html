@@ -16,6 +16,9 @@
                 <div class="font-size-15 font-weight-600 margin-1">整体账号情况</div>
                 <div class="">
 
+
+                    {switch name="$roletype" }
+                    {case value="4"}
                     <div class="data  col-lg-4 text-level-center">
                         <div class="data_ico ">
                             <span><img  class="index_ico" src="__static__/admin/image/shangzhang.png" alt=""></span>
@@ -23,6 +26,10 @@
                         </div>
                         <div class="data_num font-weight-600 margin-top-20">{$new_add}</div>
                     </div>
+
+                    {/case}
+                    {default /}
+                    {/switch}
 
                     <div class="data  col-lg-4 text-level-center">
                         <div class="data_ico">
