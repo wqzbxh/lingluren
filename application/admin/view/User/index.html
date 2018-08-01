@@ -31,16 +31,15 @@
                 <!--end 按条件进行查询-->
 
                 <div class="col-lg-6 text-level-right">
-
                     {switch name="$r_id" }
                     {case value="2"}
-                    <a href="{:url('user/add')}"><button class="btn btn_gre" style=" color: #fff;background-color: #66CCC4;border-color: #66CCC4;">新增</button></a>
+                    <!--<a href="{:url('user/add')}"><button class="btn btn_gre" style=" color: #fff;background-color: #66CCC4;border-color: #66CCC4;">新增</button></a>-->
                     {/case}
                     {case value="1"}
-                    <a href="{:url('user/add')}"><button class="btn btn_gre" style=" color: #fff;background-color: #66CCC4;border-color: #66CCC4;">新增</button></a>
+                      <a href="{:url('user/add')}"><button class="btn btn_gre" style=" color: #fff;background-color: #66CCC4;border-color: #66CCC4;">新增</button></a>
                     {/case}
                     {case value="0"}
-                    <a href="{:url('user/teacherAdd')}"><button class="btn btn_gre" style=" color: #fff;background-color: #66CCC4;border-color: #66CCC4;">新增</button></a>
+                     <a href="{:url('user/teacherAdd')}"><button class="btn btn_gre" style=" color: #fff;background-color: #66CCC4;border-color: #66CCC4;">新增</button></a>
                     {/case}
                     {default /}
                     {/switch}

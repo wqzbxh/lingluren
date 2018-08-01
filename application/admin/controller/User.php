@@ -17,7 +17,8 @@ class User extends Login
     public function _initialize()
     {
        if(session('mitangUser')){
-          var_dump(session('mitangUser')['r_id']);
+//        /  var_dump(session('mitangUser')['r_id']);
+           $this->uername = session('mitangUser')['name'];
            $this->userId = session('mitangUser')['id'];
            $this->rId = session('mitangUser')['r_id'];
        }else{
@@ -45,38 +46,62 @@ class User extends Login
         $start_time = !empty($_POST['start_time']) ? $_POST['start_time'] : '2018-01-01 00:00:00';
         $end_time = !empty($_POST['end_time']) ? $_POST['end_time'] : '2028-01-01 00:00:00';
         $page = isset($_GET['page']) ? $_GET['page'] : 0;
-       // $type = isset($_POST['type']) ? $_POST['type'] : 2;
         $type = isset($_GET['type']) ? $_GET['type'] : 2;
         $limit =10;
         $offset = $page * $limit;
         if(empty($search)){
             switch ($type){
                 case 1:
-                    $userRows = $userModel
-                        ->alias('a')
-                        ->join('user b','a.f_id = b.id',"LEFT" )
-                        ->join('user t','a.t_id = t.id',"LEFT" )
-                        ->where(array('a.is_show'=>1,'a.is_del'=>0,'a.r_id'=>$type))
-                        ->where('a.create_time','between time',[$start_time,$end_time])
-                        ->field($userModel->s_field)
-                        ->limit($offset,$limit)
-                        ->order('a.id desc')
-                        ->select()
-                        ->toArray();
+                     if($this->rId == 0){
+                         $userRows = $userModel
+                             ->alias('a')
+                             ->join('user b','a.f_id = b.id',"LEFT" )
+                             ->join('user t','a.t_id = t.id',"LEFT" )
+                             ->where('a.id','in',session('mitangUser')['s_id'])
+                             ->where('a.create_time','between time',[$start_time,$end_time])
+                             ->limit($offset,$limit)
+                             ->field($userModel->s_field)
+                             ->order('a.id desc')
+                             ->select()->toArray();
+                     }else{
+                        $userRows = $userModel
+                            ->alias('a')
+                            ->join('user b','a.f_id = b.id',"LEFT" )
+                            ->join('user t','a.t_id = t.id',"LEFT" )
+                            ->where(array('a.is_show'=>1,'a.is_del'=>0,'a.r_id'=>$type))
+                            ->where('a.create_time','between time',[$start_time,$end_time])
+                            ->field($userModel->s_field)
+                            ->limit($offset,$limit)
+                            ->order('a.id desc')
+                            ->select()
+                            ->toArray();
+                     }
                     break;
 
                 case 2:
-                    $userRows = $userModel
-                        ->alias('a')
-                        ->join('user b','a.s_id = b.id',"LEFT" )
-                        ->where(array('a.is_show'=>1,'a.is_del'=>0,'a.r_id'=>$type))
-                        ->where('a.create_time','between time',[$start_time,$end_time])
-                        ->field($userModel->f_field)
-                        ->limit($offset,$limit)
-                        ->order('a.id desc')
-                        ->select()
-                        ->toArray();
-
+                    if($this->rId == 0){
+                        $userRows = $userModel
+                            ->alias('a')
+                            ->join('user b','a.s_id = b.id',"LEFT" )
+                            ->where(array('a.is_show'=>1,'a.is_del'=>0,'a.r_id'=>$type,'a.t_id'=>$this->userId))
+                            ->where('a.create_time','between time',[$start_time,$end_time])
+                            ->field($userModel->f_field)
+                            ->limit($offset,$limit)
+                            ->order('a.id desc')
+                            ->select()
+                            ->toArray();
+                    }else{
+                        $userRows = $userModel
+                            ->alias('a')
+                            ->join('user b','a.s_id = b.id',"LEFT" )
+                            ->where(array('a.is_show'=>1,'a.is_del'=>0,'a.r_id'=>$type))
+                            ->where('a.create_time','between time',[$start_time,$end_time])
+                            ->field($userModel->f_field)
+                            ->limit($offset,$limit)
+                            ->order('a.id desc')
+                            ->select()
+                            ->toArray();
+                    }
                     break;
 
                 case 0:
@@ -106,12 +131,74 @@ class User extends Login
 
             }
 
-            $count  = $userModel->where(array('is_show'=>1,'is_del'=>0,'r_id'=>$type))->where('create_time','between time',[$start_time,$end_time])->field($userModel->t_field)->limit($offset,$limit)->count();
         }else{
-            $userRows = $userModel->where(array('is_show'=>1,'is_del'=>0,'r_id'=>$type))->where($userModel->fuzzy_query,'like','%'.$search.'%')->where('create_time','between time',[$start_time,$end_time])->field($userModel->t_field)->limit($offset,$limit)->select()->toArray();
-            $count = $userModel->where(array('is_show'=>1,'is_del'=>0,'r_id'=>$type))->where($userModel->fuzzy_query,'like','%'.$search.'%')->where('create_time','between time',[$start_time,$end_time])->field($userModel->t_field)->limit($offset,$limit)->count();
-        }
+            switch ($type) {
+                case 1:
+                    if ($this->rId == 0) {
+                        $userRows = $userModel
+                            ->alias('a')
+                            ->join('user b', 'a.f_id = b.id', "LEFT")
+                            ->join('user t', 'a.t_id = t.id', "LEFT")
+                            ->where('a.id', 'in', session('mitangUser')['s_id'])
+                            ->where('a.create_time', 'between time', [$start_time, $end_time])
+                            ->where($userModel->fuzzy_query, 'like', '%' . $search . '%')
+                            ->limit($offset, $limit)
+                            ->field($userModel->s_field)
+                            ->order('a.id desc')
+                            ->select()->toArray();
+                    } else {
+                        $userRows = $userModel
+                            ->alias('a')
+                            ->join('user b', 'a.f_id = b.id', "LEFT")
+                            ->join('user t', 'a.t_id = t.id', "LEFT")
+                            ->where($userModel->fuzzy_query, 'like', '%' . $search . '%')
+                            ->where(array('a.is_show' => 1, 'a.is_del' => 0, 'a.r_id' => $type))
+                            ->where('a.create_time', 'between time', [$start_time, $end_time])
+                            ->field($userModel->s_field)
+                            ->limit($offset, $limit)
+                            ->order('a.id desc')
+                            ->select()
+                            ->toArray();
+                    }
+                    break;
 
+                case 2:
+                    if($this->rId == 0){
+                        $userRows = $userModel
+                            ->alias('a')
+                            ->join('user b','a.s_id = b.id',"LEFT" )
+                            ->where(array('a.is_show'=>1,'a.is_del'=>0,'a.r_id'=>$type,'a.t_id'=>$this->userId))
+                            ->where($userModel->fuzzy_query, 'like', '%' . $search . '%')
+                            ->where('a.create_time','between time',[$start_time,$end_time])
+                            ->field($userModel->f_field)
+                            ->limit($offset,$limit)
+                            ->order('a.id desc')
+                            ->select()
+                            ->toArray();
+                    }else{
+                        $userRows = $userModel
+                            ->alias('a')
+                            ->join('user b','a.s_id = b.id',"LEFT" )
+                            ->where(array('a.is_show'=>1,'a.is_del'=>0,'a.r_id'=>$type))
+                            ->where($userModel->fuzzy_query, 'like', '%' . $search . '%')
+                            ->where('a.create_time','between time',[$start_time,$end_time])
+                            ->field($userModel->f_field)
+                            ->limit($offset,$limit)
+                            ->order('a.id desc')
+                            ->select()
+                            ->toArray();
+                    }
+                    break;
+
+                case 0:
+
+                    break;
+
+                default:
+
+            }
+        }
+        $count = sizeof($userRows);
         $pageList =ceil($count / $limit);
         $this->assign('list',$userRows);
         $this->assign('r_id',$type);
@@ -155,6 +242,7 @@ class User extends Login
      */
     public function edit()
     {
+        echo "<h1>暂不支持编辑</h1>";
         $returnArray = array();
         $actionLogModel = new \app\common\model\ActionLog();
         if(!empty($_POST['id'])){
@@ -326,19 +414,26 @@ class User extends Login
         $data['s_id'] = isset($_POST['s_id']) ? $_POST['s_id'] : 0;
         $data['t_id'] = $this->userId;
         $data['create_time'] = date('Y-m-d H:i:s');
-        var_dump($_POST);
-        var_dump($returnArray);
         if(empty($returnArray)){
             $userModel = new \app\common\model\User();
             $userResult = $userModel->create($data);
             if($userResult){
+                $userResult = $userResult->toArray();
                 switch ($data['r_id']){
                     case 1:
-                        echo "<script>alert('".$actionModel::ERRORCODE[1]."');location.href='../../index.html?type=1'</script>";
+                        $teacherRow = $userModel->get($this->userId)->toArray();
+                        if($teacherRow){
+                            $teacherResult = $userModel->where(array('id'=>$this->userId))->update(array('s_id'=>$userResult['id'].','.$teacherRow['s_id']));
+                            $teacherResult = $userModel->get($this->userId)->toArray();
+                            session('mitangUser',$teacherResult);
+                            $actionModel->addActionLog(1,$this->userId,$this->uername,'增加学生的ID',$userResult['id']);
+                        }
+                        echo "<script>alert('".$actionModel::ERRORCODE[1]."');location.href='../index.html?type=1'</script>";
                         break;
                     case 2:
-                        $row = $userResult->toArray();
+                        $row = $userResult;
                         $userModel->where(array('id'=>$data['s_id']))->update(array('f_id'=>$row['id']));
+                        $actionModel->addActionLog(1,$this->userId,$this->uername,'增加家长的iD',$userResult['id']);
                         echo "<script>alert('".$actionModel::ERRORCODE[1]."');location.href='index.html'</script>";
                         break;
                     case 0:
@@ -347,6 +442,7 @@ class User extends Login
                     default:
                         echo "<script>alert('".$actionModel::ERRORCODE[1]."');location.href='index.html'</script>";
                 }
+
             }else{
                 return $actionModel::ERRORCODE[100009];
             }
@@ -363,8 +459,6 @@ class User extends Login
      */
     public function delAction()
     {
-
-
         $actionLogModel = new \app\common\model\ActionLog();
         $userModel = new \app\common\model\User();
         $returnArray = array();
@@ -377,6 +471,8 @@ class User extends Login
                     'mssg' => $actionLogModel::ERRORCODE[1],
                     'data' => array()
                 );
+
+                $actionLogModel->addActionLog(1,$this->userId,$this->uername,request()->action().request()->controller(),$_POST['id']);
                 //  $actionLogModel->addActionLog(1,$this->user_id,$this->username,'删除了编号为'.$_POST['id'].'的用户');
             }else{
                 $returnArray = array(

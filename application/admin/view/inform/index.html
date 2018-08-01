@@ -1,6 +1,6 @@
 <title>老师管理界面</title>
 
-<div class="container-fluid" style="background-color: #F6F8F9;height: 800px;">
+<div class="container-fluid" style="background-color: #F6F8F9;">
     <div class="row ">
 
         <!--左部菜单部分-->
@@ -29,12 +29,12 @@
                     <div class="font-size-18">通知信息</div>
                 </div>
 
-                <form method="POST" action="{:url('programme/index')}?type=" enctype="multipart/form-data" >
-                    <div class="col-lg-6 margin-top-25">
-                        <input type="text" name="search" placeholder="输入活动名称/创建人" class="nborder-radio-5 col-lg-6" style="width:360px;height: 35px;" >
-                        <a href="{:url('programme/index')}"><button class="col-lg-6 glyphicon glyphicon-search font-size-25" style="border:none;background: none;width: 20px;color:#ccc;margin-top:5px;display: block"></button></a>
-                    </div>
-                </form>
+
+                <div class="col-lg-6 margin-top-25">
+                    <input type="text" name="search" placeholder="输入活动名称/创建人" class="nborder-radio-5 col-lg-6" style="width:360px;height: 35px;" >
+                    <a href="{:url('inform/index')}?type={$type}"><button class="col-lg-6 glyphicon glyphicon-search font-size-25" style="border:none;background: none;width: 20px;color:#ccc;margin-top:5px;display: block"></button></a>
+                </div>
+
                 <div class="col-lg-6 text-level-right">
 
                     {switch name="$type" }
@@ -69,17 +69,22 @@
                             </tr>
                             <!--循环输出用户基本信息-->
 
-                            <tr>
-                                <td>家长面谈</td>
-                                <td>ALice老师</td>
-                                <td>A，B,C,D</td>
-                                <td>已发送</td>
-                                <td>2018-08-01</td>
+
+
+
+                                {volist name="list" id="vo"}
+                                 <tr>
+                                        <td>{$vo.theme}</td>
+                                        <td>{$vo.theme}</td>
+                                        <td>{$vo.theme}</td>
+                                        <td>{$vo.theme}</td>
+                                        <td>{$vo.create_time}</td>
                                 <td>
                                     <span>  <a href="{:url('user/edit',['id'=> 1])}"><img class="index_ico" src="__static__/admin/image/edit.png" alt="编辑？" id=""></a></span>　
-                                    <span  onclick="del()" ><img class="index_ico"  src="__static__/admin/image/del.png" alt="Delete？" id="del"></span>
+                                    <span  onclick="del({$vo.id})" ><img class="index_ico"  src="__static__/admin/image/del.png" alt="Delete？" id="del"></span>
 
                                 </td>
+                                {/volist}
                             </tr>
                             <!--分页 -->
                             <tr>
@@ -89,21 +94,21 @@
                                 <td colspan="5" class="page text-level-right">
                                     {if condition="($page <= 0)"}
                                     {else /}
-                                    <a href="{:url('programme/index')}?page={$page-1}"><div class="btn border-radio-5 chunk_back">◄</div></a>
+                                    <a href="{:url('inform/index')}?page={$page-1}"><div class="btn border-radio-5 chunk_back">◄</div></a>
                                     {/if}
 
                                     {for start="0" end="$page_list"}
                                     {if condition="($page == $i)"}
-                                    <a href="{:url('programme/index')}?page={$i}">   <div class="btn font-style-page font-style-page-default" onclick="checkPage({$i})">{$i+1}</div></a>
+                                    <a href="{:url('inform/index')}?page={$i}">   <div class="btn font-style-page font-style-page-default" onclick="checkPage({$i})">{$i+1}</div></a>
                                     {else /}
-                                    <a href="{:url('programme/index')}?page={$i}">   <div class="btn border-radio-5 chunk_back" onclick="checkPage({$i})" >{$i+1}</div></a>
+                                    <a href="{:url('inform/index')}?page={$i}">   <div class="btn border-radio-5 chunk_back" onclick="checkPage({$i})" >{$i+1}</div></a>
                                     {/if}
                                     {/for}
 
                                     {if condition="($page_list <= 0)"}
                                     {elseif condition="$page == $page_list-1 " /}
                                     {else /}
-                                    <a href="{:url('programme/index')}?page={$page+1}"><div class="btn  border-radio-5 chunk_back">►</div></a>
+                                    <a href="{:url('inform/index')}?page={$page+1}"><div class="btn  border-radio-5 chunk_back">►</div></a>
                                     {/if}
                                 </td>
                             </tr>
@@ -117,20 +122,19 @@
             <!--替换内容-->
         </div>
     </div>
-</div>g
+</div>
 <script>
     function del($page) {
         con=confirm("Are you sure to delete it?");
         if(con==true){
-            $.post("{:url('programme/delAction')}",{'id':$page},function(data){
+            $.post("{:url('inform/delAction')}",{'id':$page},function(data){
                 console.log(data);
                 if(data['code'] == 1){
                     alert('deleted successfully!');
-                    location.href = '{:url("programme/index")}';
+                    location.href = '{:url("inform/index")}';
                 }else{
                     alert('Delete failed!');
                 }
-
             });
         }
     }

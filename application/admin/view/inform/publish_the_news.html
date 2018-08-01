@@ -1,6 +1,6 @@
 <title>发布消息</title>
 
-<div class="container-fluid" style="background-color: #F6F8F9;height: 800px;">
+<div class="container-fluid" style="background-color: #F6F8F9">
     <div class="row ">
 
         <!--左部菜单部分-->
@@ -17,100 +17,105 @@
               <div class="font-size-25 font-weight-600">发布信息
             </div>
             <div class="col-lg-12 margin-top-10" style="margin-left: -16px;">
-                <text class="font-color-93DBD5"> 通知 </text>&nbsp/&nbsp新建通知
+                <text class="font-color-93DBD5"> 通知 </text>&nbsp/&nbsp 新建通知
             </div>
             <!--发送信息主体-->
-            <div class="chunk_back col-lg-12 margin-top-10 report shade ">
-                <div class="col-lg-6 margin-top-25">
-                    <span class="redColor"> ❋ </span> 接收人　<input type="text" name="recipient" placeholder="接收人" class="inputClass">　<input type="hidden" name="r_id" value="1" class="inputClass">
-                    <img src="__static__admin/image/addr.png" alt="" class="ico" id="select">
-                </div>
-                <div class="col-lg-6 margin-top-25">
-                    <span class="redColor"> ❋ </span> 时　间　<input type="date" name="time" placeholder="接收人"  value="<?php echo date('Y-m-d'); ?>" class="inputClass">　<input type="hidden" name="r_id" value="<?php echo date('Y-m-d'); ?>" class="inputClass">
-                </div>
-                <div class="col-lg-6 margin-top-25">
-                    <span class="redColor"> ❋ </span> 主　题　<input type="text" name="theme" placeholder="接收人" class="inputClass">　<input type="hidden" name="r_id" value="1" class="inputClass">
-                </div>
-                <div class="col-lg-6 margin-top-25">
-                    <span class="redColor"> ❋ </span> 地　点　<input type="text" name="seat" placeholder="接收人" class="inputClass">　<input type="hidden" name="r_id" value="1" class="inputClass">
-                </div>
-                <div class="col-lg-6 margin-top-35">
-                    <div class="col-lg-2 margin-left-01" style="margin-left: -16px;"><span class="redColor"> ❋ </span>图　片</div>
-                    <div class="col-lg-4 text-level-left margin-left-03">   <input type="file" name="img" placeholder="接收人" class="inputClass"></div>
-                    <!--<div class="div1">-->
-                        <!--<img src="__static__/admin/image/eamil.png"  class="index_ico" alt="">-->
-                    <!--</div>-->
-                </div>
+            <form  method="post" action="{:url('Inform/addAction')}" enctype="multipart/form-data" >
+                <div class="chunk_back col-lg-12 margin-top-10 report shade ">
+                    <div class="col-lg-6 margin-top-35 ">
+                        <span class="redColor"> ❋ </span> 接收人　<input type="text" name="recipient" placeholder="接收人" class="recipient inputClass">　<input type="hidden" name="r_id" value="1" class="inputClass">
+                        <img src="__static__admin/image/addr.png" alt="" class="ico" id="select">
+                    </div>
+                    <div class="col-lg-6 margin-top-35">
+                        <span class="redColor"> ❋ </span> 时　间　<input type="date" name="start_time" placeholder="通知开始时间"  value="<?php echo date('Y-m-d'); ?>" class=" inputClass">　<input type="hidden" name="r_id" value="<?php echo date('Y-m-d'); ?>" class="inputClass">
+                    </div>
+                    <div class="col-lg-6 margin-top-35">
+                        <span class="redColor"> ❋ </span> 主　题　<input type="text" name="theme" placeholder="主　题" class="inputClass">　<input type="hidden" name="r_id" value="1" class="inputClass">
+                    </div>
+                    <div class="col-lg-6 margin-top-35">
+                        <span class="redColor"> ❋ </span> 地　点　<input type="text" name="seat" placeholder="地　点" class="inputClass">　<input type="hidden" name="r_id" value="1" class="inputClass">
+                    </div>
+                    <div class="col-lg-6 margin-top-35">
+                        <div class="col-lg-2 margin-left-01" style="margin-left: -16px;"><span class="redColor"> ❋ </span>图　片</div>
+                        <div class="col-lg-4 text-level-left margin-left-03"> <input type="file" name="img_file" placeholder="接收人" class="getimg inputClass" onchange="verifyImg()"></div>
+                        <!--<div class="div1">-->
+                            <!--<img src="__static__/admin/image/eamil.png"  class="index_ico" alt="">-->
+                        <!--</div>-->
+                    </div>
 
-                <div class="col-lg-12  margin-top-35">
-                    <div class="col-lg-3"  style="margin-left: -1rem;">
-                        <span class="redColor ce"> ❋ </span> 正文　
+                    <div class="col-lg-12  margin-top-35">
+                        <div class="col-lg-3"  style="margin-left: -1rem;">
+                            <span class="redColor ce"> ❋ </span> 正文　
+                        </div>
+
+                    </div>
+                    <div class="col-lg-12 margin-top-35 ">
+                        <div class="col-lg-12 text-level-left margin-left-02">
+                            　<textarea  name="content" placeholder="Room 601, no. 485, nanlin road, sanlin town, pudong new area." style="height: 400px;width: 1200px" class="inputClass infotext"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 margin-top-25 ">
+                        <div class="col-lg-3 text-level-left ">
+                            发送人:  <text class="nickname">身份</text>
+                        </div>
+                    </div>
+                    <input type="hidden" value="1" class="send_status"  name="send_status" >
+                </div>
+                <!--发送按钮-->
+                <div class="chunk_back col-lg-12 margin-top-10 report shade text-level-right">
+                    <div class="col-lg-6 text-level-left" id="">
+                        <div id="sendtime"> <text>选择发送时间：</text> <input class='datainp' id='dateinfo' type='text' name="send_time" placeholder='请选择'  readonly style='border:none'></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <button class="btn font-color-fff navigation-bk-a" type="submit">立即发送</button>
+                        <div class="btn font-color-fff bkffb84d" style="background: #ffb84d" id="sendBtn" >定时发送
+                        </div>
+                        <button class="btn font-color-fff " type="reset">重置</button>
                     </div>
 
                 </div>
-                <div class="col-lg-12 margin-top-25 ">
-                    <div class="col-lg-12 text-level-left margin-left-02">
-                        　<textarea  name="street_address" placeholder="Room 601, no. 485, nanlin road, sanlin town, pudong new area." style="height: 400px;width: 1200px" class="inputClass infotext"></textarea>
+                <!--替换内容-->
+                <div class="col-lg-12 chunk_back col-lg-12 margin-top-10 report shade selectResult">
+                    <div class="col-lg-12">
+                        <div class="font-size-18 margin-top-10">选择发送对象</div>
                     </div>
-                </div>
-                <div class="col-lg-12 margin-top-25 ">
-                    <div class="col-lg-3 text-level-left ">
-                        发送人:  <text class="nickname">身份</text>
+                    <!--已选择-->
+                    <div class="margin-top-35 col-lg-12">
+                        <ul class="role">
+                            <li class="roleli margin-top-20"><img src="__static__admin/image/trigonright.png" alt="" > 学生
+                                <ul  class="roletyle">
+                                    {volist name="studentsRow" id="vo"}
+                                      <input type="checkbox" value="{$vo.id}" name="sProblem"> <text class="checkboxtext"> {$vo.name}</text><br>
+                                    {/volist}
+                                </ul>
+                            </li>
+                            <li  class="roleli margin-top-10"><img src="__static__admin/image/trigonright.png" alt="" class="" > 家长
+                                <ul  class="roletyle">
+                                    {volist name="parentRows" id="vo"}
+                                      <input type="checkbox" value="{$vo.id}" name="sProblem"> <text class="checkboxtext"> {$vo.name}</text><br>
+                                    {/volist}
+                                </ul>
+                            </li>
+                            {switch name="$roletype" }
+                            {case value="4"}
+                                <li  class="roleli margin-top-10"><img src="__static__admin/image/trigonright.png" alt="" class="" >导师
+                                    <ul  class="roletyle">
+                                        {volist name="teacherRows" id="vo"}
+                                        <input type="checkbox" value="{$vo.id}" name="sProblem"> <text class="checkboxtext"> {$vo.name}</text><br>
+                                        {/volist}
+                                    </ul>
+                                </li>
+                            {/case}
+                            {default /}
+                            {/switch}
+                        </ul>
                     </div>
-                </div>
-            </div>
-            <!--发送按钮-->
-            <div class="chunk_back col-lg-12 margin-top-10 report shade text-level-right">
-                <div class="col-lg-6 text-level-left" id="">
-                  <div id="sendtime"> <text>选择发送时间：</text> <input class='datainp' id='dateinfo' type='text' placeholder='请选择'  readonly style='border:none'></div>
-                </div>
-                <div class="col-lg-6">
-                    <button class="btn font-color-fff navigation-bk-a">立即发送</button>
-                    <button class="btn font-color-fff bkffb84d" style="background: #ffb84d" id="sendBtn" >定时发送</button>
-                    <button class="btn font-color-fff " type="reset">重置</button>
-                </div>
-
-            </div>
-            <!--替换内容-->
-            <div class="col-lg-12 chunk_back col-lg-12 margin-top-10 report shade selectResult">
-                <div class="col-lg-12">
-                    <div class="font-size-18 margin-top-10">选择发送对象</div>
-                </div>
-                <!--已选择-->
-                <div class="margin-top-35 col-lg-12">
-                    <ul class="role">
-                        <li class="roleli margin-top-20"><img src="__static__admin/image/trigonright.png" alt="" > 导师
-                            <ul  class="roletyle">
-                                <input type="checkbox" value="1" name="sProblem[]"> <text class="checkboxtext"> 导师1</text><br>
-                                <input type="checkbox" value="2" name="sProblem[]"><text class="checkboxtext"> 导师1</text><br>
-                                <input type="checkbox" value="3" name="sProblem[]"><text class="checkboxtext"> 导师1</text><br>
-                                <input type="checkbox" value="4" name="sProblem[]"><text class="checkboxtext"> 导师1</text>
-                            </ul>
-                        </li>
-                        <li  class="roleli margin-top-10"><img src="__static__admin/image/trigonright.png" alt="" class="" > 学生
-                            <ul  class="roletyle">
-                                <input type="checkbox" value="1" name="sProblem[]"> <text class="checkboxtext"> 导师1</text><br>
-                                <input type="checkbox" value="2" name="sProblem[]"><text class="checkboxtext"> 导师1</text><br>
-                                <input type="checkbox" value="3" name="sProblem[]"><text class="checkboxtext"> 导师1</text><br>
-                                <input type="checkbox" value="4" name="sProblem[]"><text class="checkboxtext"> 导师1</text>
-                            </ul>
-                        </li>
-                        <li  class="roleli margin-top-10"><img src="__static__admin/image/trigonright.png" alt="" class="" > 家长
-                            <ul  class="roletyle">
-                                <input type="checkbox" value="1" name="sProblem[]"> <text class="checkboxtext"> 导师1</text><br>
-                                <input type="checkbox" value="2" name="sProblem[]"><text class="checkboxtext"> 导师1</text><br>
-                                <input type="checkbox" value="3" name="sProblem[]"><text class="checkboxtext"> 导师1</text><br>
-                                <input type="checkbox" value="4" name="sProblem[]"><text class="checkboxtext"> 导师1</text>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-12 margin-top-35 selectBtn">
-                    <button class="btn font-color-fff bk-ccc">取消</button>
-                    <button class="btn font-color-fff navigation-bk " id = "selectSure">确认</button>
-                </div>
-            </div>
-
+                    <div class="col-lg-12 margin-top-35 selectBtn">
+                        <button class="btn font-color-fff bk-ccc">取消</button>
+                        <div class="btn font-color-fff navigation-bk " id = "selectSure">确认</div>
+                    </div>
+                   </div>
+            </form>
         </div>
     </div>
 </div>
@@ -138,7 +143,11 @@
         background: #eee;
         width: 400px;
         height: 800px;
+        overflow-y: auto;
         display: none;
+    }
+    .role{
+
     }
     .selectBtn{
         position: fixed;
@@ -157,14 +166,17 @@
         $("#sendBtn").click(function(){
             if(sendtype == 1){
                 sendtype = 2;
-                $(this).text('取消发送')
-                $('#sendtime').show()
+                $(this).text('取消定时发送');
+                $('#sendtime').show();
+                $('.send_status').replaceWith('<input type="hidden" value="2" name="send_status" class="send_status">')
             }else{
                 sendtype = 1;
-                $(this).text('定时发送')
-                $('#sendtime').hide()
+                $(this).text('定时发送');
+                $('#sendtime').hide();
+                $('.send_status').replaceWith('<input type="hidden" value="1" name="send_status" class="send_status">')
             }
         })
+
     //    选择发送对象selectResult
         $('#select').click(function () {
             if(selectResultType == 1){
@@ -183,11 +195,16 @@
 
         //    确认发送对象名单
         $('#selectSure').click(function () {
+          var  id_array = [];
+          $('input[name="sProblem"]:checked').each(function(){
+              id_array.push($(this).val());//向数组中添加元素
+          });
+          $('.recipient').replaceWith("<input  value='"+id_array+"' type='text' name='recipient' placeholder='已选择' class='inputClass recipient'>")
             $('.selectResult').hide();
         })
     })
 
-    //定时发送时间样式
+    //定时发送时间样式recipient
     jeDate({
         dateCell:"#dateinfo",
         format:"YYYY-MM-DD hh:mm:ss",
@@ -198,5 +215,11 @@
             console.log(val);
         }
     })
+
+    function verifyImg(e){
+            // var filename = $('.getimg').file;
+          var obj = document.getElementsByClassName("getimg");
+          console.log(obj)
+    }
 
 </script>

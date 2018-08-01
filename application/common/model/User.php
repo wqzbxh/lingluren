@@ -20,7 +20,7 @@ class User extends Model
     );    
     
     //模糊查询字段
-    public $fuzzy_query = 'nick_name|telephone|name|address';
+    public $fuzzy_query = 'a.nick_name|b.nick_name|b.name|a.telephone|a.name|a.address';
     
     //嘀友APP接口错误状态码
 
@@ -32,7 +32,7 @@ class User extends Model
     public $f_field = 'a.id,a.nick_name,a.name,a.telephone,a.address,a.sex,a.r_id,b.name as sname';
 
     // 老师管理返回字段
-    public $t_field = 'id,nick_name,name,telephone,address,sex';
+    public $t_field = 'id,nick_name,name,telephone,address,sex,s_id,t_id,f_id';
 
     /**
      * 获取规划表中学生的名称fodeach方法案例1

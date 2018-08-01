@@ -32,11 +32,21 @@ class ActionLog extends Model
 
 
 
-
-
-
         200001 => '删除四年规划失败!Delete four-year plan failed!',
         200002 => '无效的四年规划ID!Invalid four-year program ID!',
+
+
+        300001 => '通知接收人的ID必须存在！The ID of the notification receiver must exist！',
+        300002 => '通知接主题必须存在！The notification subject must exist！',
+        300003 => '通知接内容必须存在！Notification must exist！',
+        300004 => '通知发送失败，请联系来思安学院管理人员！The notification failed to be sent. Please contact the administrator of si an college！',
+        300005 => '找不到该信息！The information could not be found！',
+        300006 => '删除失败！fail to delete！',
+
+
+        900001 => 'API密码错误！API password error！',
+        900002 => '获取openid失败！',
+        900003 => '无效的参数！Invalid arguments！',
 
     );
 
